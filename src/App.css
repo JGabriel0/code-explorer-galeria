@@ -1,0 +1,19 @@
+#radio-0:checked ~ .first {
+  margin-left: 0;
+}
+
+#radio-1:checked ~ .first {
+  margin-left: -25%;
+}
+
+#radio-2:checked ~ .first {
+  margin-left: -75%;
+}
+
+#radio-3:checked ~ .first {
+  margin-left: -125%;
+}
+
+#radio-4:checked ~ .first {
+  margin-left: -175%;
+}
