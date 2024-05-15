@@ -1,79 +1,105 @@
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import Imagem1 from "./assets/imagem-1.jpg";
 import Imagem2 from "./assets/imagem-2.jpg";
 import Imagem3 from "./assets/imagem-3.jpg";
 import Imagem4 from "./assets/imagem-4.jpg";
 import Imagem5 from "./assets/imagem-5.jpg";
-import "./App.css";
-import { useEffect, useState } from "react";
-
-const images: string[] = [Imagem1, Imagem2, Imagem3, Imagem4, Imagem5];
+import { useState } from "react";
 
 export function App() {
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [image, setImage] = useState<number>(1);
+  const [imagemAmpliada, setImagemAmpliada] = useState<boolean>(false);
 
-  function toogleRadio(index: number) {
-    setCurrentIndex(index);
+  function toggleAmpliarImagem() {
+    setImagemAmpliada(!imagemAmpliada);
   }
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) =>
-        prevIndex === images.length - 1 ? 0 : prevIndex + 1
-      );
-    }, 3000); // Troca de imagem a cada 3 segundos
+  function toggleImage(direction: string) {
+    if (direction === "left") {
+      if (image === 1) {
+        setImage(5);
+        return;
+      } else {
+        setImage(image - 1);
+        return;
+      }
+    }
 
-    return () => clearInterval(interval);
-  }, []);
+    if (image === 5) {
+      setImage(1);
+      return;
+    } else {
+      setImage(image + 1);
+      return;
+    }
+  }
 
   return (
     <section className="bg-neutral-300 w-screen h-screen flex justify-center items-center">
-      <div className="w-[400px] h-[350px] overflow-hidden">
-        <div className="flex w-[500%] justify-center items-center">
-          {images.map((_, index) => (
-            <input
-              type="radio"
-              className="hidden"
-              name="radio-btn"
-              id={`radio-${String(index)}`}
-              key={index}
-              checked={currentIndex === index}
-              onChange={() => toogleRadio(index)}
-            />
-          ))}
+      <div className="w-[400px] h-[350px]">
+        <div className="flex justify-center items-center">
+          <div className="px-6 cursor-pointer">
+            <ArrowLeft onClick={() => toggleImage("left")} />
+          </div>
 
-          {images.map((image, index) => (
+          {image == 1 && (
             <div
-              className={`w-3/12 ease-linear duration-500 ${
-                index === 0 ? "first" : ""
+              className={`w-[400px] h-[350px] rounded-lg overflow-hidden transform transition-transform ease-in-out duration-500 ${
+                imagemAmpliada ? "scale-150" : ""
               }`}
-              key={index}
+              onClick={toggleAmpliarImagem}
             >
-              <img
-                className="w-[400px] h-[350px] rounded-lg"
-                src={image}
-                alt={String(index)}
-              />
+              <img className="w-full h-full rounded-lg" src={Imagem1} />
             </div>
-          ))}
-        </div>
+          )}
 
-        <div className="absolute w-[400px] -mt-10 flex justify-center gap-5">
-          {images.map((_, index) => (
+          {image == 2 && (
             <div
-              className={`border-2 border-solid border-neutral-500 rounded-lg p-1 cursor-pointer ease-linear duration-500 ${
-                currentIndex === index ? "bg-neutral-500" : ""
+              className={`w-[400px] h-[350px] rounded-lg overflow-hidden transform transition-transform ease-in-out duration-500 ${
+                imagemAmpliada ? "scale-150" : ""
               }`}
-            ></div>
-          ))}
-        </div>
+              onClick={toggleAmpliarImagem}
+            >
+              <img className="w-full h-full rounded-lg" src={Imagem2} />
+            </div>
+          )}
 
-        <div className="absolute w-[400px] -mt-10 flex justify-center gap-5">
-          {images.map((_, index) => (
-            <label
-              htmlFor={`radio-${String(index)}`}
-              className="border-2 border-solid border-neutral-500 rounded-lg p-1 cursor-pointer ease-linear duration-500 hover:bg-neutral-500"
-            ></label>
-          ))}
+          {image == 3 && (
+            <div
+              className={`w-[400px] h-[350px] rounded-lg overflow-hidden transform transition-transform ease-in-out duration-500 ${
+                imagemAmpliada ? "scale-150" : ""
+              }`}
+              onClick={toggleAmpliarImagem}
+            >
+              <img className="w-full h-full rounded-lg" src={Imagem3} />
+            </div>
+          )}
+
+          {image == 4 && (
+            <div
+              className={`w-[400px] h-[350px] rounded-lg overflow-hidden transform transition-transform ease-in-out duration-500 ${
+                imagemAmpliada ? "scale-150" : ""
+              }`}
+              onClick={toggleAmpliarImagem}
+            >
+              <img className="w-full h-full rounded-lg" src={Imagem4} />
+            </div>
+          )}
+
+          {image == 5 && (
+            <div
+              className={`w-[400px] h-[350px] rounded-lg overflow-hidden transform transition-transform ease-in-out duration-500 ${
+                imagemAmpliada ? "scale-150" : ""
+              }`}
+              onClick={toggleAmpliarImagem}
+            >
+              <img className="w-full h-full rounded-lg" src={Imagem5} />
+            </div>
+          )}
+
+          <div className="px-6 cursor-pointer">
+            <ArrowRight onClick={() => toggleImage("right")} />
+          </div>
         </div>
       </div>
     </section>
